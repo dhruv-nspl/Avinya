@@ -3,7 +3,7 @@ from odoo import fields, models,api
 class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
 
-    sequence_no = fields.Integer()
+    sequence_no = fields.Integer("#", compute='_compute_sequence_number',)
 
     @api.depends('sequence', 'move_id')
     def _compute_sequence_number(self):
