@@ -12,28 +12,24 @@
             </td>
         </xpath>
         <xpath expr="//div[@name='comment']" position="after"> 
-            <div style="border:1px solid #ddd; padding:10px; margin-top:20px;">
-                <strong style="font-size:14px;">Bank Details</strong>
-                <hr style="margin:5px 0;"/>
-                <table style="width:100%; font-size:12px;">
-                    <tr>
-                        <td style="width:30%;"><strong>Bank Name</strong></td>
-                        <td><span t-field="bank.bank_id"/></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Account Number</strong></td>
-                        <td><span t-field="bank.acc_number"/></td>
-                    </tr>
-                    <tr>
-                        <td><strong>IFSC Code</strong></td>
-                        <td><span t-field="bank.bank_id.bic"/></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Account Holder</strong></td>
-                        <td><span t-field="o.company_id"/></td>
-                    </tr>
-                </table>
-            </div>
+            <t t-if="o.company_id.partner_id.bank_ids">
+                <div style="margin-top:20px;">
+                    <strong style="font-size:14px;">Bank Details:</strong>
+                    <t t-foreach="o.company_id.partner_id.bank_ids" t-as="bank">
+                        <div style="margin-top:5px;">
+                            <strong t-field="bank.bank_id"/>
+                            <br/>
+                            Account Name: <span t-field="o.company_id"/>
+                            <br/>
+                            Account Number: <span t-field="bank.acc_number"/>
+                            <br/>
+                            IFSC / BIC: <span t-field="bank.bank_id.bic"/>
+                            <br/>
+                            Branch: <span t-field="bank.bank_id.city"/>
+                        </div>
+                    </t>
+                </div>
+            </t>
         </xpath>
     </template>
 </odoo>
