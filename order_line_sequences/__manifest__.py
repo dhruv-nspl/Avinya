@@ -38,6 +38,8 @@
         'views/sale_order_templates.xml',
         'views/stock_picking_templates.xml',
         'views/purchase_order_templates.xml',
+        "views/account_move_views.xml",
+        "views/report_invoice_template.xml"
     ],
     'images': ['static/description/banner.jpg'],
     'license': 'AGPL-3',

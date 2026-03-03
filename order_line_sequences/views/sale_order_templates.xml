@@ -12,6 +12,29 @@
                 <span t-esc="line.sequence_number"/>
             </td>
         </xpath>
+        <xpath expr="//div[@class='page']" position="inside"> 
+            <div style="border:1px solid #ddd; padding:10px; margin-top:20px;">
+                <strong style="font-size:14px;">Bank Details</strong>
+                <hr style="margin:5px 0;"/>
+                <table style="width:100%; font-size:12px;">
+                    <tr>
+                        <td style="width:30%;"><strong>Bank Name</strong></td>
+                        <td><span t-field="bank.bank_id"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Account Number</strong></td>
+                        <td><span t-field="bank.acc_number"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>IFSC Code</strong></td>
+                        <td><span t-field="bank.bank_id.bic"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Account Holder</strong></td>
+                        <td><span t-field="o.company_id"/></td>
+                    </tr>
+                </table>
+            </div>
+        </xpath>
     </template>
 </odoo>
-
