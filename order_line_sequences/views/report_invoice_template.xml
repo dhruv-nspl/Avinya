@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <!--        Inherited purchase report purchase order document-->
-    <template id="purchase_order_report"
-              inherit_id="purchase.report_purchaseorder_document">
+    <template id="report_invoice_document_inherit_sequence" inherit_id="account.report_invoice_document">
         <xpath expr="//table[hasclass('table')]//tr//th[@name='th_description']"
                position="before">
             <th name="th_sequence" class="text-start">#</th>
@@ -10,24 +8,10 @@
         <xpath expr="//tbody//tr//td"
                position="before">
             <td name="td_sequence">
-                <span t-esc="line.sequence_number"/>
+                <span t-esc="line.sequence_no"/>
             </td>
         </xpath>
-    </template>
-
-    <template id="purchase_quotation_report"
-              inherit_id="purchase.report_purchasequotation_document">
-        <xpath expr="//table[hasclass('table')]//tr//th[@name='th_description']"
-               position="before">
-            <th name="th_sequence" class="text-start">#</th>
-        </xpath>
-        <xpath expr="//tbody//tr//td"
-               position="before">
-            <td name="td_sequence">
-                <span t-esc="order_line.sequence_number"/>
-            </td>
-        </xpath>
-        <xpath expr="//div[@class='page']" position="inside"> 
+        <xpath expr="//div[@name='comment']" position="after"> 
             <div style="border:1px solid #ddd; padding:10px; margin-top:20px;">
                 <strong style="font-size:14px;">Bank Details</strong>
                 <hr style="margin:5px 0;"/>
