@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_invoice_document_inherit_container_fields" inherit_id="account.report_invoice_document">
+        <xpath expr="//table[@name='invoice_line_table']//th[@name='th_description']" position="after">
+            <th name="th_container_no"
+                t-attf-class="text-start {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                <span>HSN Code</span>
+            </th>
+        </xpath>
+
+        <xpath expr="//t[@name='account_invoice_line_accountable']/td[@name='account_invoice_line_name']"
+               position="after">
+            <td name="td_container_no"
+                t-attf-class="text-start {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                <span t-field="line.hsn_code"/>
+            </td>
+        </xpath>
+
+    </template>
+</odoo>

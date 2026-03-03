@@ -1,0 +1,13 @@
+<odoo>
+    <template id="report_saleorder_document_inherit_hsn" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//th[@name='th_description']" position="after">
+            <th name="th_hsn_code" class="text-start">HSN Code</th>
+        </xpath>
+
+        <xpath expr="//td[@name='td_product_quantity']" position="before">
+            <td name="td_hsn_code" class="text-start">
+                <span t-field="line.hsn_code"/>
+            </td>
+        </xpath>
+    </template>
+</odoo>
