@@ -10,8 +10,6 @@
         "views/sale_order_report.xml",
         "views/purchase_order.xml",
         "views/purchase_order_report.xml",
-        "views/account_move_line.xml",
-        "views/account_invoice_report_inherit.xml",
     ],
     "depends": ['l10n_in', 'sale_management', 'purchase'],
     "installable": True,
