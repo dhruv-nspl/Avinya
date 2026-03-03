@@ -13,14 +13,14 @@
             </td>
         </xpath>
         <xpath expr="//div[@class='page']" position="inside"> 
-            <t t-if="o.company_id.partner_id.bank_ids">
+            <t t-if="doc.company_id.partner_id.bank_ids">
                 <div style="margin-top:20px;">
                     <strong style="font-size:14px;">Bank Details:</strong>
-                    <t t-foreach="o.company_id.partner_id.bank_ids" t-as="bank">
+                    <t t-foreach="doc.company_id.partner_id.bank_ids" t-as="bank">
                         <div style="margin-top:5px;">
                             <strong t-field="bank.bank_id"/>
                             <br/>
-                            Account Name: <span t-field="o.company_id"/>
+                            Account Name: <span t-field="doc.company_id"/>
                             <br/>
                             Account Number: <span t-field="bank.acc_number"/>
                             <br/>
