@@ -14,26 +14,26 @@
         <field name="dpi">90</field>
     </record>
 
-    <record id="action_quatation_template" model="ir.actions.report">
-        <field name="name">Custom Quatation</field>
+    <record id="action_quotation_template" model="ir.actions.report">
+        <field name="name">Custom Quotation</field>
         <field name="model">sale.order</field>
         <field name="report_type">qweb-pdf</field>
-        <field name="report_name">nspl_custom_reports.custom_quatation_template</field>
-        <field name="report_file">nspl_custom_reports.custom_quatation_template</field>
+        <field name="report_name">nspl_custom_reports.custom_quotation_template</field>
+        <field name="report_file">nspl_custom_reports.custom_quotation_template</field>
         <field name="print_report_name">'Sale Order - %s' % object.name</field>
         <field name="paperformat_id" ref="nspl_custom_reports.custom_paper_formate_report" />
         <field name="binding_model_id" ref="sale.model_sale_order" />
         <field name="binding_type">report</field>
     </record>
 
-    <template id="custom_quatation_template">
+    <template id="custom_quotation_template">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
                 <t t-call="nspl_custom_reports.report_custom_header">
                     <div class="page">
 
                         <!-- Title -->
-                        <h2 style="text-align:center; margin-bottom: 3px;">Quatation</h2>
+                        <h2 style="text-align:center; margin-bottom: 3px;">Quotation</h2>
 
                         <!-- customer details -->
                         <table style="width:100%; border-collapse: collapse; margin-bottom: 5px;">
@@ -52,7 +52,12 @@
                                 </td>
                                 <td
                                     style="width:25%; padding: 4px; border: 1px solid black;">
-                                    <!-- <span t-field="o.client_order_ref" /> -->
+                                    <t
+                                        t-foreach="o.partner_id.child_ids.filtered(lambda c: c.type == 'contact')"
+                                        t-as="contact">
+                                        <span t-field="contact.name" />
+                                        <br />
+                                    </t>
                                 </td>
                             </tr>
                             <!-- Row 2 -->
@@ -97,14 +102,12 @@
                                         Quantity
                                     </th>
                                     <th
-                                        style="padding: 4px; border: 1px solid black; text-align: center;">Unit Rate
-                                        (<span t-esc="o.currency_id.symbol"/>)
-                                    </th>
+                                        style="padding: 4px; border: 1px solid black; text-align: center;">Unit
+                                        Rate (<span t-esc="o.currency_id.symbol" />) </th>
 
                                     <th
                                         style="padding: 4px; border: 1px solid black; text-align: center;">
-                                        Amount (<span t-esc="o.currency_id.symbol"/>)
-                                    </th>
+                                        Amount (<span t-esc="o.currency_id.symbol" />) </th>
 
                                 </tr>
                             </thead>
@@ -190,7 +193,7 @@
                                             </td>
                                             <td
                                                 style="width:25%; padding: 4px; border: 1px solid black;">
-                                                <!-- <span t-field="o.name" /> -->
+                                                <span t-field="o.price_term_id" />
                                             </td>
                                         </tr>
                                         <!-- Row 2 -->
@@ -211,7 +214,8 @@
                                             </td>
                                             <td
                                                 style="width:25%; padding: 4px; border: 1px solid black;">
-                                                <!-- <span t-field="o.l10n_in_state_id" /> -->
+                                                <span t-field="o.insurance_id" />
+
                                             </td>
                                         </tr>
                                         <tr>
@@ -221,7 +225,10 @@
                                             </td>
                                             <td
                                                 style="width:25%; padding: 4px; border: 1px solid black;">
-                                                <!-- <span t-field="o.l10n_in_state_id" /> -->
+                                                <t t-if="o.picking_ids">
+                                                    <span t-field="o.picking_ids[0].date_deadline"
+                                                        t-options="{'format': 'dd/MM/yyyy'}" />
+                                                </t>
                                             </td>
                                         </tr>
                                         <tr>
