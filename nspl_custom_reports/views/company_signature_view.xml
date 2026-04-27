@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="company_signature_ext_form_view" model="ir.ui.view">
+        <field name="name">company.signature.form.inherit.task_ext</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+                <page string="Signature Authority" name="tax_details">
+                    <group>
+                        <group name="inv_sign">
+                            <field name="invoice_signatory"/>
+                            <field name="invoice_sign" widget="signature" options="{'size': [200,'']}"/>
+                        </group>
+                        <group name="sales_sign">
+                            <!-- <field name="sales_signatory"/> -->
+                            <!-- <field name="sales_sign" widget="signature" options="{'size': [200,'']}"/> -->
+                        </group>
+                    </group>
+                    <group>
+                        <group name="cs_seal">
+                            <!-- <field name="company_seal" widget="signature" options="{'size': [200,'']}"/> -->
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

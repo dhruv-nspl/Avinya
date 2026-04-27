@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="custom_paper_formate_report" model="report.paperformat">
+        <field name="name">Custom Paper Formate Report</field>
+        <field name="default" eval="False" />
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">30</field>
+        <field name="margin_bottom">20</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">25</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="action_quatation_template" model="ir.actions.report">
+        <field name="name">Custom Quatation</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">nspl_custom_reports.custom_quatation_template</field>
+        <field name="report_file">nspl_custom_reports.custom_quatation_template</field>
+        <field name="print_report_name">'Sale Order - %s' % object.name</field>
+        <field name="paperformat_id" ref="nspl_custom_reports.custom_paper_formate_report" />
+        <field name="binding_model_id" ref="sale.model_sale_order" />
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="custom_quatation_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="nspl_custom_reports.report_custom_header">
+                    <div class="page">
+
+                        <!-- Title -->
+                        <h2 style="text-align:center; margin-bottom: 3px;">Quatation</h2>
+
+                        <!-- customer details -->
+                        <table style="width:100%; border-collapse: collapse; margin-bottom: 5px;">
+                            <tr>
+                                <td
+                                    style="width:25%; padding: 4px; border: 1px solid black;">
+                                    <strong>Customer :</strong>
+                                </td>
+                                <td
+                                    style="width:25%; padding: 4px; border: 1px solid black;">
+                                    <span t-field="o.partner_id.name" />
+                                </td>
+                                <td
+                                    style="width:25%; padding: 4px; border: 1px solid black;">
+                                    <strong>Kind Attn.:</strong>
+                                </td>
+                                <td
+                                    style="width:25%; padding: 4px; border: 1px solid black;">
+                                    <!-- <span t-field="o.client_order_ref" /> -->
+                                </td>
+                            </tr>
+                            <!-- Row 2 -->
+                            <tr>
+                                <td
+                                    style="width:25%; padding: 4px; border: 1px solid black;">
+                                    <strong>Enq. Ref:</strong>
+                                </td>
+                                <td
+                                    style="width:25%; padding: 4px; border: 1px solid black;">
+                                    <span t-field="o.client_order_ref" />
+                                </td>
+                                <td
+                                    style="width:25%; padding: 4px; border: 1px solid black;">
+                                    <strong>ATS Ref:</strong>
+                                </td>
+                                <td
+                                    style="width:25%; padding: 4px; border: 1px solid black;">
+                                    <!-- <span t-field="o.company_id.vat" /> -->
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- order line table -->
+                        <table class="table table-bordered"
+                            style="width:100%; border-collapse: collapse; border: 1px solid black; margin-bottom: 7px;">
+                            <thead>
+                                <tr style="background-color: #f0f0f0;">
+                                    <th
+                                        style="padding: 4px; border: 1px solid black; text-align: center;">
+                                        #</th>
+                                    <th
+                                        style="padding: 4px; border: 1px solid black; text-align: center;">Item
+                                        Description
+                                    </th>
+                                    <th
+                                        style="padding: 4px; border: 1px solid black; text-align: center;">
+                                        Uom
+                                    </th>
+                                    <th
+                                        style="padding: 4px; border: 1px solid black; text-align: center;">
+                                        Quantity
+                                    </th>
+                                    <th
+                                        style="padding: 4px; border: 1px solid black; text-align: center;">Unit Rate
+                                        (<span t-esc="o.currency_id.symbol"/>)
+                                    </th>
+
+                                    <th
+                                        style="padding: 4px; border: 1px solid black; text-align: center;">
+                                        Amount (<span t-esc="o.currency_id.symbol"/>)
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="sr_no" t-value="1" />
+
+                                <t t-foreach="o.order_line" t-as="line">
+                                    <!-- Skip section & note lines -->
+                                    <t t-if="not line.display_type">
+                                        <tr>
+                                            <!-- SR NO -->
+                                            <td style="text-align:center;">
+                                                <span t-esc="sr_no" />
+                                            </td>
+
+                                            <!-- ITEM NAME -->
+                                            <td style="text-align:left;">
+                                                <span t-field="line.name" />
+                                            </td>
+
+                                            <!-- UOM -->
+                                            <td style="text-align:center;">
+                                                <span t-field="line.product_uom_id" />
+                                            </td>
+
+                                            <!-- QTY -->
+                                            <td style="text-align:right;">
+                                                <span t-field="line.product_uom_qty" />
+                                            </td>
+
+                                            <!-- PRICE -->
+                                            <td style="text-align:right;">
+                                                <span t-field="line.price_unit" />
+                                            </td>
+
+                                            <!-- AMOUNT -->
+                                            <td style="text-align:right;">
+                                                <span t-field="line.price_subtotal" />
+                                            </td>
+                                        </tr>
+
+                                        <t t-set="sr_no" t-value="sr_no + 1" />
+                                    </t>
+                                </t>
+                            </tbody>
+                            <tfoot>
+                                <tr style="background-color: #f0f0f0; font-weight: bold;">
+                                    <td colspan="2"
+                                        style="padding: 4px; border: 1px solid black; text-align: right;">
+                                        Total
+                                    </td>
+                                    <td style="padding: 4px; border: 1px solid black;" />
+                                    <td
+                                        style="text-align: right; padding: 4px; border: 1px solid black;">
+                                        <span
+                                            t-esc="'%.2f' % sum(line.product_uom_qty for line in o.order_line if not line.display_type)" />
+                                    </td>
+
+                                    <td style="padding: 4px; border: 1px solid black;"></td>
+
+                                    <td
+                                        style="text-align: right; padding: 4px; border: 1px solid black;">
+                                        <span t-field="o.amount_untaxed" />
+                                    </td>
+
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                        <!-- sign and term table -->
+                        <table
+                            style="width:100%; border-collapse: collapse; border: 1px solid black; margin-top: 5px; margin-bottom: 5px;">
+                            <tr>
+                                <!-- Left: -->
+                                <td
+                                    style="border: 1px solid black; width: 50%; vertical-align: top;">
+                                    <table
+                                        style="width:100%; border-collapse: collapse;">
+                                        <tr>
+                                            <td
+                                                style="width:25%; padding: 4px; border: 1px solid black;">
+                                                <strong>Price Term:</strong>
+                                            </td>
+                                            <td
+                                                style="width:25%; padding: 4px; border: 1px solid black;">
+                                                <!-- <span t-field="o.name" /> -->
+                                            </td>
+                                        </tr>
+                                        <!-- Row 2 -->
+                                        <tr>
+                                            <td
+                                                style="width:25%; padding: 4px; border: 1px solid black;">
+                                                <strong>Payment:</strong>
+                                            </td>
+                                            <td
+                                                style="width:25%; padding: 4px; border: 1px solid black;">
+                                                <span t-field="o.payment_term_id" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td
+                                                style="width:25%; padding: 4px; border: 1px solid black;">
+                                                <strong>Insurance:</strong>
+                                            </td>
+                                            <td
+                                                style="width:25%; padding: 4px; border: 1px solid black;">
+                                                <!-- <span t-field="o.l10n_in_state_id" /> -->
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td
+                                                style="width:25%; padding: 4px; border: 1px solid black;">
+                                                <strong>Delivery:</strong>
+                                            </td>
+                                            <td
+                                                style="width:25%; padding: 4px; border: 1px solid black;">
+                                                <!-- <span t-field="o.l10n_in_state_id" /> -->
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td
+                                                style="width:25%; padding: 4px; border: 1px solid black;">
+                                                <strong>Validity:</strong>
+                                            </td>
+                                            <td
+                                                style="width:25%; padding: 4px; border: 1px solid black;">
+                                                <span t-field="o.validity_date"
+                                                    t-options="{'format': 'dd/MM/yyyy'}" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <!-- Right: Company Name and Authorised Signatory -->
+                                <td
+                                    style="padding:7px; border: 1px solid black; width: 50%; text-align: center; vertical-align: middle;">
+                                    <div>
+                                        <span>
+                                            FOR AVINYA TECHNOLOGY SOLUTIONS
+                                        </span>
+                                    </div>
+                                    <div
+                                        style="position: relative; display: inline-block; width: 180px; height: 70px;">
+                                        <!-- Signature (base layer) -->
+                                        <t t-if="o.company_id.invoice_sign">
+                                            <img
+                                                t-att-src="'data:image/png;base64,%s' % o.company_id.invoice_sign.decode('utf-8')"
+                                                style="
+                                                        position: absolute;
+                                                        bottom: 5px;
+                                                        left: 10px;
+                                                        max-height: 60px;
+                                                        max-width: 160px;
+                                                        z-index: 1;
+                                                        opacity: 0.95;"
+                                                alt="Signature" />
+                                        </t>
+                                        <!-- Seal (overlapping + rotated) -->
+                                        <!-- <t t-if="o.company_id.company_seal">
+                                            <img
+                                                t-att-src="'data:image/png;base64,%s' % o.company_id.company_seal.decode('utf-8')"
+                                                style="
+                                                        position: absolute;
+                                                        bottom: 20px;
+                                                        left: 40px;
+                                                        height: auto;
+                                                        width: 200px;
+                                                        z-index: 2;
+                                                        opacity: 0.85;
+                                                        transform: rotate(-12deg);"
+                                                alt="Company Seal" />
+                                        </t> -->
+                                    </div>
+                                    <br />
+                                    <t t-if="o.company_id.invoice_signatory">
+                                        <strong>
+                                            <span t-field="o.company_id.invoice_signatory.name" />
+                                        </strong>
+                                        <br />
+                                    </t>
+                                    <strong>Authorised Signatory</strong>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
