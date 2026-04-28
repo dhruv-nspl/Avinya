@@ -279,7 +279,7 @@
                                 <td colspan="2"
                                     style="padding: 5px; border: 1px solid black; width:25%;">
                                     <strong>Terms Of Delivery:</strong>
-                                    <span t-if="o.termm_of_delivery" t-field="o.termm_of_delivery" />
+                                    <span t-if="o.termm_of_delivery" t-field="o.term_of_delivery" />
                                 </td>
                             </tr>
                         </table>
