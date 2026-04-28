@@ -79,6 +79,17 @@
                                     </t>
                                 </td>
                             </tr>
+                            <!-- Row 3 -->
+                            <tr>
+                                <td
+                                    style="width:25%; padding: 4px; border: 1px solid black;">
+                                    <strong>Reference :</strong>
+                                </td>
+                                <td colspan="3"
+                                    style="width:25%; padding: 4px; border: 1px solid black;">
+                                   
+                                </td>
+                            </tr>
                         </table>
 
                         <!-- ship and bill to -->
@@ -182,10 +193,6 @@
                                         / SAC
                                     </th>
                                     <th
-                                        style="padding: 4px; border: 1px solid black; text-align: center;">Ref
-                                        : Your quatation
-                                    </th>
-                                    <th
                                         style="padding: 4px; border: 1px solid black; text-align: center;">
                                         Quantity
                                     </th>
@@ -223,11 +230,6 @@
                                             <!-- HSN -->
                                             <td style="text-align:center;">
                                                 <span t-field="line.product_id.l10n_in_hsn_code" />
-                                            </td>
-
-                                            <!-- REF -->
-                                            <td style="text-align:center;">
-                                                <span t-field="o.partner_ref" />
                                             </td>
 
                                             <!-- QTY -->
@@ -268,7 +270,6 @@
                                         style="padding: 4px; border: 1px solid black; text-align: right;">
                                         Total
                                     </td>
-                                    <td style="padding: 4px; border: 1px solid black;" />
                                     <td style="padding: 4px; border: 1px solid black;" />
                                     <td
                                         style="text-align: right; padding: 4px; border: 1px solid black;">

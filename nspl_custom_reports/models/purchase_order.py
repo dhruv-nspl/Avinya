@@ -43,3 +43,11 @@ class PurchaseOrder(models.Model):
             uom_id=line.product_uom_id,
             l10n_in_hsn_code=line.product_id.l10n_in_hsn_code if hasattr(line.product_id, 'l10n_in_hsn_code') else False,
         )
+        
+        
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if not vals.get('name') or vals['name'] == '/':
+                vals['name'] = self.env['ir.sequence'].next_by_code('purchase.order.custom') or '/'
+        return super().create(vals_list)

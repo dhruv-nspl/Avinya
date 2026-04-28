@@ -40,7 +40,7 @@
                             <tr>
                                 <td
                                     style="width:25%; padding: 4px; border: 1px solid black;">
-                                    <strong>Invoice NO:</strong>
+                                    <strong>Invoice No:</strong>
                                 </td>
                                 <td
                                     style="width:25%; padding: 4px; border: 1px solid black;">
@@ -68,11 +68,11 @@
                                 </td>
                                 <td
                                     style="width:25%; padding: 4px; border: 1px solid black;">
-                                    <strong>IEC NO:</strong>
+                                    <strong>Description:</strong>
                                 </td>
                                 <td
                                     style="width:25%; padding: 4px; border: 1px solid black;">
-                                    <span t-field="o.company_id.vat" />
+                                    <span t-esc="o.invoice_payment_term_id.name" />
                                 </td>
                             </tr>
                         </table>
@@ -293,12 +293,6 @@
                                         <br />
                                         <span t-esc="o.currency_id.amount_to_text(o.amount_total)" />
                                     </div>
-                                    <div>
-                                        <strong>Description :</strong>
-                                        <br />
-                                        <span t-esc="o.currency_id.amount_to_text(o.amount_total)" />
-                                    </div>
-
                                 </td>
                                 <td
                                     style="width:37%; padding: 4px;  vertical-align: top; line-height: 3px;">
@@ -389,17 +383,17 @@
                                     <br />
                                     <t t-if="o.partner_bank_id">
                                         <t t-set="bank" t-value="o.partner_bank_id" />
-                                        <strong>Bank :</strong>
+                                        <strong>Name :</strong>
                                         <span t-field="bank.bank_id.name" />
                                         <br />
                                         <strong>A/C No :</strong>
                                         <span t-field="bank.acc_number" />
                                         <br />
-                                        <strong>AD Code :</strong>
-                                        <span t-field="bank.bank_id.bank_ad_code" />
-                                        <br />
                                         <strong>IFSC :</strong>
                                         <span t-field="bank.bank_id.bank_ifsc_code" />
+                                        <br/>
+                                         <strong>Holder's Name :</strong>
+                                        <span t-field="bank.acc_holder_name" />
                                     </t>
                                     <t t-else="">
                                         <span>Bank details not configured</span>
