@@ -12,7 +12,7 @@ class AccountMove(models.Model):
         ('air',  'Air'),
         ('road', 'Road'),
         ('rail', 'Rail'),
-    ], string="Dispatch Through")
+    ], string="Dispatch Through", default="sea")
     
     # sea
     port_of_loading   = fields.Char(string="Port of Loading")

@@ -11,6 +11,11 @@
                 <field name="price_term_id" />
                 <field name="insurance_id" />
             </xpath>
+
+            <xpath expr="//field[@name='partner_id']" position="before">
+                <field name="order_type" widget="radio"
+                    options="{'horizontal': true}" />
+            </xpath>
         </field>
     </record>
 

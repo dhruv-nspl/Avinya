@@ -35,11 +35,13 @@
                         <h2 style="text-align:center; margin-bottom: 3px;">Commercial Invoice</h2>
 
                         <!-- INVOICE DETAIALS -->
+                        <t t-set="sale_order"
+                            t-value="env['sale.order'].search([('name','=', o.invoice_origin)], limit=1)" />
                         <table style="width:100%; border-collapse: collapse; margin-bottom: 5px;">
                             <tr>
                                 <td
                                     style="width:25%; padding: 4px; border: 1px solid black;">
-                                    <strong>Export Invoice NO:</strong>
+                                    <strong>Export Invoice No:</strong>
                                 </td>
                                 <td
                                     style="width:25%; padding: 4px; border: 1px solid black;">
@@ -63,36 +65,33 @@
                                 </td>
                                 <td
                                     style="width:25%; padding: 4px; border: 1px solid black;">
-                                    <!-- <span t-field="o.invoice_origin" /> -->
+                                    <span t-field="o.company_id.iec_no" />
                                 </td>
                                 <td
                                     style="width:25%; padding: 4px; border: 1px solid black;">
-                                    <strong>IEC NO:</strong>
+                                    <strong>LUT No:</strong>
                                 </td>
                                 <td
                                     style="width:25%; padding: 4px; border: 1px solid black;">
-                                    <!-- <span t-field="o.company_id.vat" /> -->
+                                    <span t-field="o.company_id.lut_no" />
+
                                 </td>
                             </tr>
                             <!-- Row 3 -->
-                            <tr>
-                                <td
-                                    style="width:25%; padding: 4px; border: 1px solid black;">
-                                    <strong>Proforma Inv NO:</strong>
+                            <tr t-if="sale_order">
+                                <td style="width:25%; padding: 4px; border: 1px solid black;">
+                                    <strong>Proforma Inv No:</strong>
                                 </td>
-                                <td
-                                    style="width:25%; padding: 4px; border: 1px solid black;">
-                                    <!-- <span t-field="o.invoice_origin" /> -->
+                                <td style="width:25%; padding: 4px; border: 1px solid black;">
+                                    <span t-esc="sale_order.name" />
+                                </td>
 
+                                <td style="width:25%; padding: 4px; border: 1px solid black;">
+                                    <strong>Proforma Inv Date:</strong>
                                 </td>
-                                <td
-                                    style="width:25%; padding: 4px; border: 1px solid black;">
-                                    <strong>Proforma Inv DATE:</strong>
-                                </td>
-                                <td
-                                    style="width:25%; padding: 4px; border: 1px solid black;">
-                                    <!-- <span t-field="o.invoice_date" -->
-                                    <!-- t-options="{'format': 'dd/MM/yyyy'}" /> -->
+                                <td style="width:25%; padding: 4px; border: 1px solid black;">
+                                    <span t-field="sale_order.date_order"
+                                        t-options="{'format': 'dd/MM/yyyy'}" />
                                 </td>
                             </tr>
                         </table>
@@ -291,6 +290,9 @@
                                 <tr style="background-color: #f0f0f0;">
                                     <th
                                         style="padding: 4px; border: 1px solid black; text-align: center;">
+                                        #</th>
+                                    <th
+                                        style="padding: 4px; border: 1px solid black; text-align: center;">
                                         NO.&amp; PACKAGES
                                     </th>
                                     <th
@@ -321,9 +323,15 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <t t-set="sr_no" t-value="1" />
                                 <t t-foreach="o.invoice_line_ids" t-as="line">
                                     <t t-if="line.display_type">
                                         <tr>
+                                            <!-- SR NO -->
+                                            <td style="text-align:center;">
+                                                <span t-esc="sr_no" />
+                                            </td>
+
                                             <td style="text-align:left;">
                                             </td>
 
@@ -356,17 +364,18 @@
                                                 <span t-field="line.price_subtotal" />
                                             </td>
                                         </tr>
-
-
+                                        <t t-set="sr_no" t-value="sr_no + 1" />
                                     </t>
                                 </t>
                             </tbody>
                             <tfoot>
+
                                 <tr style="background-color: #f0f0f0; font-weight: bold;">
                                     <td colspan="3"
                                         style="padding: 4px; border: 1px solid black; text-align: right;">
                                         Total
                                     </td>
+                                    <td style="padding: 4px; border: 1px solid black;" />
                                     <td style="padding: 4px; border: 1px solid black;" />
                                     <td
                                         style="text-align: right; padding: 4px; border: 1px solid black;">
@@ -385,51 +394,50 @@
                             </tfoot>
                         </table>
 
+                        <!-- gross nt  -->
+                        <table style="width:100%; border-collapse: collapse; margin-bottom: 5px;">
+                            <tr>
+                                <td style="width:25%; padding: 4px; border: 1px solid black;">
+                                    <strong>NET WT :</strong>
+                                </td>
+                                <td style="width:25%; padding: 4px; border: 1px solid black;"></td>
+                                <td style="width:25%; padding: 4px; border: 1px solid black;">
+                                    <strong>P.O. No. :</strong>
+                                </td>
+                                <td style="width:25%; padding: 4px; border: 1px solid black;"> </td>
+                            </tr>
+                            <tr>
+                                <td style="width:25%; padding: 4px; border: 1px solid black;">
+                                    <strong>GROSS WT :</strong>
+                                </td>
+                                <td style="width:25%; padding: 4px; border: 1px solid black;"></td>
+                                <td style="width:25%; padding: 4px; border: 1px solid black;">
+                                    <strong>Date :</strong>
+                                </td>
+                                <td style="width:25%; padding: 4px; border: 1px solid black;"> </td>
+                            </tr>
+                        </table>
+
                         <!-- Amount in Words + Tax Summary -->
                         <table
                             style="width:100%; border-collapse: collapse; border: 1px solid black;">
                             <tr>
-                                <td style="width:63%; padding: 8px;  font-size:14px;">
+                                <td style=" padding: 8px; font-size:14px;">
                                     <div>
                                         <strong>Total Invoice Amount (<span
                                                 t-esc="o.currency_id.name" />) in Words:</strong>
-                                        <br />
                                         <span t-esc="o.currency_id.amount_to_text(o.amount_total)" />
                                     </div>
+                                    <!-- <br /> -->
                                     <div>
                                         <strong>Note :</strong>
-                                        <br />
-                                        <span t-esc="o.currency_id.amount_to_text(o.amount_total)" />
+                                         <span> Pan No: <t t-esc="o.company_id.l10n_in_pan_entity_id.name or ''" /></span>,
+                                        <span> GSTIN No: <t t-esc="o.company_id.vat or 'N/A'" /> </span>,
+                                        <span> IGST PAYMENT: N.A.</span>,
+                                        <span> ACCESSORY STATUS: NO ACCESSORY</span>
                                     </div>
-
                                 </td>
 
-                                <!-- Right: Tax Summary -->
-                                <td
-                                    style="width:37%; padding: 4px;  vertical-align: top; line-height: 3px;">
-                                    <div id="total">
-                                        <div class="ms-auto">
-                                            <table
-                                                class="o_total_table table table-borderless avoid-page-break-inside border border-0">
-
-                                                <t t-if="o.tax_totals"
-                                                    t-call="account.document_tax_totals">
-                                                    <t t-set="tax_totals" t-value="o.tax_totals" />
-                                                    <t t-set="currency" t-value="o.currency_id" />
-                                                </t>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <t
-                                        t-if="o.tax_totals and o.tax_totals.get('display_in_company_currency')">
-                                        <t t-set="tax_totals" t-value="o.tax_totals" />
-                                        <t
-                                            t-call="account.document_tax_totals_company_currency_template" />
-                                    </t>
-                                    <t t-else="">
-                                        <div />
-                                    </t>
-                                </td>
                             </tr>
                         </table>
 
@@ -449,11 +457,12 @@
                                         <strong>A/C No :</strong>
                                         <span t-field="bank.acc_number" />
                                         <br />
+                                        <strong>IFSC :</strong>
+                                        <span t-field="bank.bank_id.bank_ifsc_code" />
+                                        <br/>
                                         <strong>AD Code :</strong>
                                         <span t-field="bank.bank_id.bank_ad_code" />
                                         <br />
-                                        <strong>IFSC :</strong>
-                                        <span t-field="bank.bank_id.bank_ifsc_code" />
                                     </t>
                                     <t t-else="">
                                         <span>Bank details not configured</span>
@@ -511,6 +520,24 @@
                                     <strong>Authorised Signatory</strong>
 
                                 </td>
+                            </tr>
+                        </table>
+
+                        <!-- DECLARATION: -->
+                        <table
+                            style="width:100%; border-collapse: collapse; border: 1px solid black;">
+                            <tr>
+                                <td style=" padding: 8px;  font-size:14px;">
+                                    <div>
+                                        <strong>DECLARATION :</strong>
+                                        <br />
+                                        <span>WE DECLARE THAT THIS INVOICE SHOWS THE ACTUAL PRICE OF
+                                            THE GOODS DESCRIBED &amp; THAT ALL PARTICULARS ARE TRUE
+                                            &amp;
+                                            CORRECT</span>
+                                    </div>
+                                </td>
+
                             </tr>
                         </table>
                     </div>

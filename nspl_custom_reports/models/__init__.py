@@ -5,3 +5,4 @@ from . import res_bank
 from . import price_term
 from . import sale_order
 from . import insurance
+from . import res_compamy
