@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
 
             <xpath expr="//label[@for='partner_id']" position="before">
-                <field name="order_type" widget="radio" options="{'horizontal': true}"/>
+                <field name="inv_type" widget="radio" options="{'horizontal': true}"/>
             </xpath>
 
             <xpath expr="//group[@id='other_tab_group']" position="inside">

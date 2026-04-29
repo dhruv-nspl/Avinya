@@ -11,7 +11,7 @@ class SaleOrder(models.Model):
     order_type = fields.Selection([
         ('normal', 'Normal'),
         ('export', 'Export'),
-    ], string='Order Type', default='normal', required=True)
+    ], string='Order Type', default='normal')
 
 
     def _prepare_invoice(self):
