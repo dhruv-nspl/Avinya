@@ -253,13 +253,13 @@
                                     </t>
                                     <!-- AIR -->
                                     <t t-elif="o.dispatch_through == 'air'">
-                                        <strong>Airport from:</strong>
-                                        <span t-if="o.airport_from" t-field="o.airport_from" />
+                                        <strong>Airport To:</strong>
+                                        <span t-if="o.airport_to" t-field="o.airport_to" />
                                     </t>
                                     <!-- RAIL -->
                                     <t t-elif="o.dispatch_through == 'rail'">
                                         <strong>Station To:</strong>
-                                        <span t-if="o.airport_to" t-field="o.airport_to" />
+                                        <span t-if="o.station_to" t-field="o.station_to" />
                                     </t>
                                 </td>
                             </tr>
