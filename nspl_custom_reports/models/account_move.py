@@ -3,6 +3,32 @@ from odoo import models, fields, api
 
 class AccountMove(models.Model):
     _inherit = "account.move"
+    
+    
+    order_type = fields.Selection([
+        ('normal', 'Normal'),
+        ('export', 'Export'),
+    ], string='Invoice Type', default='normal', required=True)
+
+    def action_post(self):
+        for move in self:
+            # Sirf customer invoice pe apply karo
+            if move.move_type == 'out_invoice' and (not move.name or move.name == '/'):
+                # Sale order se order_type uthao
+                order_type = None
+                if move.invoice_origin:
+                    sale_order = self.env['sale.order'].search(
+                        [('name', '=', move.invoice_origin)], limit=1
+                    )
+                    if sale_order:
+                        order_type = sale_order.order_type
+
+                if order_type == 'export':
+                    move.name = self.env['ir.sequence'].next_by_code('invoice.export.custom') or '/'
+                else:
+                    move.name = self.env['ir.sequence'].next_by_code('invoice.normal.custom') or '/'
+
+        return super().action_post()
 
     dispatch_doc_no = fields.Char(string="Dispatch Doc No")
     term_of_delivery = fields.Text(string="Term Of Delivery")
