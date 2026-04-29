@@ -277,6 +277,13 @@
 
                                 <td colspan="2"
                                     style="padding: 5px; border: 1px solid black; width:25%;">
+                                    <strong>Terms Of Payment :</strong>
+                                    <span t-if="o.invoice_payment_term_id" t-field="o.invoice_payment_term_id" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4"
+                                    style="padding: 5px; border: 1px solid black; width:25%;">
                                     <strong>Terms Of Delivery:</strong>
                                     <span t-if="o.term_of_delivery" t-field="o.term_of_delivery" />
                                 </td>
@@ -431,10 +438,15 @@
                                     <!-- <br /> -->
                                     <div>
                                         <strong>Note :</strong>
-                                         <span> Pan No: <t t-esc="o.company_id.l10n_in_pan_entity_id.name or ''" /></span>,
-                                        <span> GSTIN No: <t t-esc="o.company_id.vat or 'N/A'" /> </span>,
-                                        <span> IGST PAYMENT: N.A.</span>,
-                                        <span> ACCESSORY STATUS: NO ACCESSORY</span>
+                                         <span> Pan No: <t
+                                                t-esc="o.company_id.l10n_in_pan_entity_id.name or ''" /></span>
+                                        ,
+                                        <span> GSTIN No: <t
+                                                t-esc="o.company_id.vat or 'N/A'" />
+                                        </span>
+                                        ,
+                                        <span> IGST
+                                        PAYMENT: N.A.</span>, <span> ACCESSORY STATUS: NO ACCESSORY</span>
                                     </div>
                                 </td>
 
@@ -459,7 +471,7 @@
                                         <br />
                                         <strong>IFSC :</strong>
                                         <span t-field="bank.bank_id.bank_ifsc_code" />
-                                        <br/>
+                                        <br />
                                         <strong>AD Code :</strong>
                                         <span t-field="bank.bank_id.bank_ad_code" />
                                         <br />

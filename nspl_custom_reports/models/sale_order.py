@@ -16,8 +16,7 @@ class SaleOrder(models.Model):
 
     def _prepare_invoice(self):
         invoice_vals = super()._prepare_invoice()
-        invoice_vals['order_type'] = self.order_type
-        invoice_vals['name'] = '/'
+        invoice_vals['inv_type'] = self.order_type
         return invoice_vals
 
     @api.model_create_multi
