@@ -1,5 +1,5 @@
 from odoo import models, fields, api
-
+from datetime import date
 
 class AccountMove(models.Model):
     _inherit = "account.move"
@@ -56,20 +56,42 @@ class AccountMove(models.Model):
     station_to = fields.Char(string="Station To")
     
     
+    def _get_financial_year(self, inv_date):
+        if not inv_date:
+            inv_date = date.today()
+
+        year = inv_date.year
+
+        if inv_date.month >= 4:
+            start = year
+            end = year + 1
+        else:
+            start = year - 1
+            end = year
+
+        return f"{str(start)[-2:]}-{str(end)[-2:]}"
+    
     def action_post(self):
         for move in self:
             if move.move_type == 'out_invoice' and (not move.name or move.name == '/'):
+            
                 inv_type = None
+    
                 if move.invoice_origin:
                     sale_order = self.env['sale.order'].search(
                         [('name', '=', move.invoice_origin)], limit=1
                     )
                     if sale_order:
                         inv_type = sale_order.order_type
-
+    
+                if not inv_type:
+                    inv_type = move.inv_type
+    
                 if inv_type == 'export':
-                    move.name = self.env['ir.sequence'].next_by_code('invoice.export.custom') or '/'
+                    seq = self.env['ir.sequence'].next_by_code('invoice.export.custom') or '/'
+                    fy = self._get_financial_year(move.invoice_date)
+                    move.name = f"{seq}/{fy}"
                 else:
                     move.name = self.env['ir.sequence'].next_by_code('invoice.normal.custom') or '/'
-
+    
         return super().action_post()
