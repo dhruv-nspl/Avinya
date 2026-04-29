@@ -68,7 +68,7 @@
                                 </td>
                                 <td
                                     style="width:25%; padding: 4px; border: 1px solid black;">
-                                    <strong>Description:</strong>
+                                    <strong>Payment Terms:</strong>
                                 </td>
                                 <td
                                     style="width:25%; padding: 4px; border: 1px solid black;">
@@ -308,15 +308,6 @@
                                             </table>
                                         </div>
                                     </div>
-                                    <t
-                                        t-if="o.tax_totals and o.tax_totals.get('display_in_company_currency')">
-                                        <t t-set="tax_totals" t-value="o.tax_totals" />
-                                        <t
-                                            t-call="account.document_tax_totals_company_currency_template" />
-                                    </t>
-                                    <t t-else="">
-                                        <div />
-                                    </t>
                                 </td>
                             </tr>
                         </table>
@@ -392,7 +383,7 @@
                                         <strong>IFSC :</strong>
                                         <span t-field="bank.bank_id.bank_ifsc_code" />
                                         <br/>
-                                         <strong>Holder's Name :</strong>
+                                         <strong>Account Holder's Name :</strong>
                                         <span t-field="bank.acc_holder_name" />
                                     </t>
                                     <t t-else="">

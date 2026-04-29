@@ -11,17 +11,13 @@ class SaleOrder(models.Model):
     order_type = fields.Selection([
         ('normal', 'Normal'),
         ('export', 'Export'),
-    ], string='Order Type', default='normal', required=True)
+    ], string='Order Type', default='normal')
 
 
     def _prepare_invoice(self):
         invoice_vals = super()._prepare_invoice()
-        if self.order_type == 'export':
-            invoice_vals['name'] = self.env['ir.sequence'].next_by_code('invoice.export.custom') or '/'
-        else:
-            invoice_vals['name'] = self.env['ir.sequence'].next_by_code('invoice.normal.custom') or '/'
+        invoice_vals['inv_type'] = self.order_type
         return invoice_vals
-
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -29,4 +25,3 @@ class SaleOrder(models.Model):
             if not vals.get('name') or vals['name'] == '/':
                 vals['name'] = self.env['ir.sequence'].next_by_code('sale.quotation.custom') or '/'
         return super().create(vals_list)
-    
