@@ -70,6 +70,11 @@
                 </group>
 
             </xpath>
+
+            <xpath expr="//field[@name='invoice_line_ids']/list//field[@name='tax_ids']" position="attributes">
+                <attribute name="readonly">parent.inv_type == 'export'</attribute>
+            </xpath>
+            
         </field>
     </record>
 </odoo>

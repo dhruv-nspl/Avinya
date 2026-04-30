@@ -71,9 +71,12 @@ class AccountMove(models.Model):
 
         return f"{str(start)[-2:]}-{str(end)[-2:]}"
     
-    def action_post(self):
-        for move in self:
-            if move.move_type == 'out_invoice' and (not move.name or move.name == '/'):
+    @api.model_create_multi
+    def create(self, vals_list):
+        records = super().create(vals_list)
+    
+        for move in records:
+            if move.move_type in ('out_invoice', 'in_invoice') and (not move.name or move.name == '/'):
             
                 inv_type = None
     
@@ -87,11 +90,20 @@ class AccountMove(models.Model):
                 if not inv_type:
                     inv_type = move.inv_type
     
+                fy = move._get_financial_year(move.invoice_date)
+    
                 if inv_type == 'export':
                     seq = self.env['ir.sequence'].next_by_code('invoice.export.custom') or '/'
-                    fy = self._get_financial_year(move.invoice_date)
                     move.name = f"{seq}/{fy}"
-                else:
-                    move.name = self.env['ir.sequence'].next_by_code('invoice.normal.custom') or '/'
     
-        return super().action_post()
+                else:
+                    seq = self.env['ir.sequence'].next_by_code('invoice.normal.custom') or '/'
+                    move.name = f"{seq}/{fy}"
+    
+        return records
+    
+    @api.onchange('inv_type')
+    def _onchange_inv_type(self):
+        if self.inv_type == 'export':
+            for line in self.invoice_line_ids:
+                line.tax_ids = False

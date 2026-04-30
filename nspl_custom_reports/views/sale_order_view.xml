@@ -16,6 +16,15 @@
                 <field name="order_type" widget="radio"
                     options="{'horizontal': true}" readonly ="state != 'draft'" />
             </xpath>
+
+            <xpath expr="//field[@name='order_line']/list//field[@name='tax_ids']" position="attributes">
+                <attribute name="readonly">parent.order_type == 'export'</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="kind_attenstion_ids" widget="many2many_tags" options="{'no_create': True}" domain="[('parent_id','=', partner_id), ('type','=','contact')]" placeholder="Select Contact Persons"/>        
+            </xpath>
+
         </field>
     </record>
 

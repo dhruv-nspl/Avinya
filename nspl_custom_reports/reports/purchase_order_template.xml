@@ -60,11 +60,11 @@
                             <tr>
                                 <td
                                     style="width:25%; padding: 4px; border: 1px solid black;">
-                                    <strong>Due Date:</strong>
+                                    <strong>Delivery Date:</strong>
                                 </td>
                                 <td
                                     style="width:25%; padding: 4px; border: 1px solid black;">
-                                    <span t-field="o.date_approve"
+                                    <span t-field="o.date_planned"
                                         t-options="{'format': 'dd/MM/yyyy'}" />
                                 </td>
                                 <td

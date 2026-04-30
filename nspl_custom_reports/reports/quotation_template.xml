@@ -50,13 +50,12 @@
                                     style="width:25%; padding: 4px; border: 1px solid black;">
                                     <strong>Kind Attn.:</strong>
                                 </td>
-                                <td
-                                    style="width:25%; padding: 4px; border: 1px solid black;">
-                                    <t
-                                        t-foreach="o.partner_id.child_ids.filtered(lambda c: c.type == 'contact')"
-                                        t-as="contact">
-                                        <span t-field="contact.name" />
-                                        <br />
+                                <td style="width:25%; padding: 4px; border: 1px solid black;">
+                                    <t t-if="o.kind_attenstion_ids">
+                                        <t t-foreach="o.kind_attenstion_ids" t-as="contact">
+                                            <span t-field="contact.name" />
+                                            <br />
+                                        </t>
                                     </t>
                                 </td>
                             </tr>
@@ -64,19 +63,19 @@
                             <tr>
                                 <td
                                     style="width:25%; padding: 4px; border: 1px solid black;">
-                                    <strong>Enq. Ref:</strong>
-                                </td>
-                                <td
-                                    style="width:25%; padding: 4px; border: 1px solid black;">
-                                    <span t-field="o.client_order_ref" />
-                                </td>
-                                <td
-                                    style="width:25%; padding: 4px; border: 1px solid black;">
                                     <strong>ATS Ref:</strong>
                                 </td>
                                 <td
                                     style="width:25%; padding: 4px; border: 1px solid black;">
-                                    <!-- <span t-field="o.company_id.vat" /> -->
+                                     <span t-field="o.name" />
+                                </td>
+                                <td
+                                    style="width:25%; padding: 4px; border: 1px solid black;">
+                                    <strong>Enq. Ref:</strong>
+                                </td>
+                                <td
+                                    style="width:25%; padding: 4px; border: 1px solid black;">
+                                   
                                 </td>
                             </tr>
                         </table>

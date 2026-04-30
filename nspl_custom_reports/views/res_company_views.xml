@@ -17,7 +17,7 @@
                     <group>
                         <group name="inv_sign">
                             <field name="invoice_signatory" />
-                            <field name="invoice_sign" widget="signature"
+                            <field name="invoice_sign" widget="image"
                                 options="{'size': [200,'']}" />
                         </group>
                     </group>
