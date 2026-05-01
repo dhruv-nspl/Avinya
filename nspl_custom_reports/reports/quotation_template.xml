@@ -224,10 +224,8 @@
                                             </td>
                                             <td
                                                 style="width:25%; padding: 4px; border: 1px solid black;">
-                                                <t t-if="o.picking_ids">
-                                                    <span t-field="o.picking_ids[0].date_deadline"
-                                                        t-options="{'format': 'dd/MM/yyyy'}" />
-                                                </t>
+                                                <span t-field="o.commitment_date"
+                                                    t-options="{'format': 'dd/MM/yyyy'}" />
                                             </td>
                                         </tr>
                                         <tr>
