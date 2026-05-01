@@ -99,11 +99,19 @@ class AccountMove(models.Model):
                 else:
                     seq = self.env['ir.sequence'].next_by_code('invoice.normal.custom') or '/'
                     move.name = f"{seq}/{fy}"
-    
+
+            if move.inv_type == 'export':
+                move.invoice_line_ids.write({'tax_ids': [(5, 0, 0)]})
+                   
         return records
     
-    @api.onchange('inv_type')
-    def _onchange_inv_type(self):
-        if self.inv_type == 'export':
-            for line in self.invoice_line_ids:
-                line.tax_ids = False
+    def write(self, vals):
+       res = super().write(vals)
+    
+       # Check if inv_type is updated OR already export
+       if 'inv_type' in vals or any(rec.inv_type == 'export' for rec in self):
+           for move in self:
+               if move.inv_type == 'export':
+                   move.invoice_line_ids.write({'tax_ids': [(5, 0, 0)]})
+    
+       return res

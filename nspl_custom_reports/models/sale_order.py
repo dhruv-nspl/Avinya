@@ -7,6 +7,7 @@ class SaleOrder(models.Model):
     price_term_id = fields.Many2one('price.term',string="Price Term")
     insurance_id = fields.Many2one('insurance.master', string="Insurance")
     kind_attenstion_ids = fields.Many2many('res.partner', string="Kind Attn.")
+    enq_ref = fields.Char(string="Enq Ref ")
 
     order_type = fields.Selection([
         ('normal', 'Normal'),
@@ -46,17 +47,28 @@ class SaleOrder(models.Model):
         for vals in vals_list:
             if not vals.get('name') or vals['name'] == '/':
                 vals['name'] = self.env['ir.sequence'].next_by_code('sale.quotation.custom') or '/'
-        return super().create(vals_list)
+        res = super().create(vals_list)
+    
+        if 'order_type' in vals or any(rec.order_type == 'export' for rec in res):
+           for sale in res:
+               if sale.order_type == 'export':
+                   sale.order_line.write({'tax_ids': [(5, 0, 0)]})
 
-   
+        return res
 
     @api.onchange('order_type')
     def _onchange_order_type(self):
         if self.order_type == 'export':
             for line in self.order_line:
                 line.tax_ids = False
-                
-    @api.onchange('partner_id')
-    def _onchange_partner_id_kind_attention(self):
-        for rec in self:
-            rec.kind_attenstion_ids = False
+            
+            
+    def write(self, vals):
+       res = super().write(vals)
+    
+       if 'order_type' in vals or any(rec.order_type == 'export' for rec in self):
+           for sale in self:
+               if sale.order_type == 'export':
+                   sale.order_line.write({'tax_ids': [(5, 0, 0)]})
+    
+       return res

@@ -85,9 +85,8 @@
                                     style="width:25%; padding: 4px; border: 1px solid black;">
                                     <strong>Reference :</strong>
                                 </td>
-                                <td colspan="3"
-                                    style="width:25%; padding: 4px; border: 1px solid black;">
-                                   
+                                <td colspan="3" style="width:25%; padding: 4px; border: 1px solid black;">
+                                    <span t-field="o.partner_ref"/>
                                 </td>
                             </tr>
                         </table>
