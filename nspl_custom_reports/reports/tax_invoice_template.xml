@@ -28,10 +28,14 @@
 
     <template id="custom_tax_invoice_template">
         <t t-call="web.html_container">
+            <t t-foreach="['Original for recipient', ' Duplicate for Transporter']" t-as="copy_type">
             <t t-foreach="docs" t-as="o">
                 <t t-call="nspl_custom_reports.report_custom_header">
                     <div class="page">
 
+                        <div style="width:100%; text-align:right; font-size:12px; margin-bottom:5px;">
+                            <span t-esc="copy_type"/>
+                        </div>
                         <!-- Title -->
                         <h2 style="text-align:center; margin-bottom: 3px;">Tax Invoice</h2>
 
@@ -414,23 +418,6 @@
                                                         opacity: 0.95;"
                                                 alt="Signature" />
                                         </t>
-
-                                        <!-- Seal (overlapping + rotated) -->
-                                        <!-- <t t-if="o.company_id.company_seal">
-                                            <img
-                                                t-att-src="'data:image/png;base64,%s' % o.company_id.company_seal.decode('utf-8')"
-                                                style="
-                                                        position: absolute;
-                                                        bottom: 20px;
-                                                        left: 40px;
-                                                        height: auto;
-                                                        width: 200px;
-                                                        z-index: 2;
-                                                        opacity: 0.85;
-                                                        transform: rotate(-12deg);"
-                                                alt="Company Seal" />
-                                        </t> -->
-
                                     </div>
                                     <br />
                                     <t t-if="o.company_id.invoice_signatory">
@@ -460,6 +447,7 @@
                     </div>
                 </t>
             </t>
+        </t>
         </t>
     </template>
 </odoo>
