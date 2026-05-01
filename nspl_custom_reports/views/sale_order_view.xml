@@ -22,7 +22,8 @@
             </xpath>
 
             <xpath expr="//field[@name='partner_id']" position="after">
-                <field name="kind_attenstion_ids" widget="many2many_tags" options="{'no_create': True}" domain="[('parent_id','=', partner_id), ('type','=','contact')]" placeholder="Select Contact Persons"/>        
+                <field name="kind_attenstion_ids" widget="many2many_tags" options="{'no_create': True}" domain="[('parent_id','=', partner_id), ('type','=','contact')]" placeholder="Select Contact Persons" readonly="state in ['cancel','sale']"/>        
+                enq_ref <field name="enq_ref" readonly="state in ['cancel','sale']" />
             </xpath>
 
         </field>
