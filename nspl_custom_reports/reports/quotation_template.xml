@@ -75,7 +75,7 @@
                                 </td>
                                 <td
                                     style="width:25%; padding: 4px; border: 1px solid black;">
-                                   
+                                   <span t-field="o.enq_ref" />
                                 </td>
                             </tr>
                         </table>
