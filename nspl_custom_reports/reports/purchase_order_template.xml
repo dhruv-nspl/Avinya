@@ -286,7 +286,7 @@
                                     <td style="padding: 4px; border: 1px solid black;"></td>
 
                                     <!-- TAX TOTAL -->
-                                    <td
+                                    <!-- <td
                                         style="text-align: right; padding: 4px; border: 1px solid black;">
                                         <t t-set="gst_total"
                                             t-value="sum(
@@ -294,7 +294,8 @@
                                                 for line in o.order_line if not line.display_type)" />
 
                                         <span t-esc="'%.2f' % gst_total" />
-                                    </td>
+                                    </td> -->
+                                    <td style="padding: 4px; border: 1px solid black;"></td>
                                     <td
                                         style="text-align: right; padding: 4px; border: 1px solid black;">
                                         <span t-field="o.amount_untaxed" />
