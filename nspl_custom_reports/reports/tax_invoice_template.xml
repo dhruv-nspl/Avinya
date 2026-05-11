@@ -233,12 +233,8 @@
                                             <td style="text-align:right; white-space: nowrap;">
                                                 <t t-set="tax_percent"
                                                     t-value="sum(t.amount for t in line.tax_ids)" />
-                                                <t t-set="tax_amt"
-                                                    t-value="line.price_subtotal * tax_percent / 100" />
-
-                                                <span
-                                                    t-esc="o.currency_id.symbol + ' %.2f' % tax_amt" />
-                                                <span t-esc="' (' + str(int(tax_percent)) + '%)'" />
+                                                
+                                                <span t-esc="' ' + str(int(tax_percent)) + '%'" />
                                             </td>
 
                                             <td style="text-align:right;">
@@ -257,17 +253,16 @@
                                         Total
                                     </td>
                                     <td style="padding: 4px; border: 1px solid black;" />
-                                    <td style="padding: 4px; border: 1px solid black;" />
                                     <td
                                         style="text-align: right; padding: 4px; border: 1px solid black;">
                                         <span
                                             t-esc="sum(line.quantity for line in o.invoice_line_ids if line.display_type == 'product')" />
                                     </td>
-
+                                    <td style="padding: 4px; border: 1px solid black;" />
                                     <td style="padding: 4px; border: 1px solid black;"></td>
 
                                     <!-- TAX TOTAL -->
-                                    <td
+                                    <!-- <td
                                         style="text-align: right; padding: 4px; border: 1px solid black;">
                                         <t t-set="gst_total"
                                             t-value="sum(
@@ -275,7 +270,8 @@
                                                 for line in o.invoice_line_ids if line.display_type == 'product')" />
 
                                         <span t-esc="'%.2f' % gst_total" />
-                                    </td>
+                                    </td> -->
+                                    <td style="padding: 4px; border: 1px solid black;"></td>
 
                                     <td
                                         style="text-align: right; padding: 4px; border: 1px solid black;">
@@ -427,6 +423,7 @@
                                         <br />
                                     </t>
                                     <strong>Authorised Signatory</strong>
+                                    <p style="font-size:10px;">This is a comuter generated document hence signature is not required.</p>
                                 </td>
                             </tr>
                         </table>

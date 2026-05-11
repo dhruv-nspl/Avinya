@@ -85,8 +85,9 @@
                                     style="width:25%; padding: 4px; border: 1px solid black;">
                                     <strong>Reference :</strong>
                                 </td>
-                                <td colspan="3" style="width:25%; padding: 4px; border: 1px solid black;">
-                                    <span t-field="o.partner_ref"/>
+                                <td colspan="3"
+                                    style="width:25%; padding: 4px; border: 1px solid black;">
+                                    <span t-field="o.partner_ref" />
                                 </td>
                             </tr>
                         </table>
@@ -196,6 +197,10 @@
                                         Quantity
                                     </th>
                                     <th
+                                        style="padding: 4px; border: 1px solid black; text-align: center;">
+                                        Uom
+                                    </th>
+                                    <th
                                         style="padding: 4px; border: 1px solid black; text-align: center;">Price
                                         / Unit
                                     </th>
@@ -236,6 +241,11 @@
                                                 <span t-field="line.product_qty" />
                                             </td>
 
+                                            <!-- UOM -->
+                                            <td style="text-align:right;">
+                                                <span t-field="line.product_uom_id" />
+                                            </td>
+
                                             <!-- PRICE -->
                                             <td style="text-align:right;">
                                                 <span t-field="line.price_unit" />
@@ -245,12 +255,8 @@
                                             <td style="text-align:right; white-space: nowrap;">
                                                 <t t-set="tax_percent"
                                                     t-value="sum(t.amount for t in line.tax_ids)" />
-                                                <t t-set="tax_amt"
-                                                    t-value="line.price_subtotal * tax_percent / 100" />
-
-                                                <span
-                                                    t-esc="o.currency_id.symbol + ' %.2f' % tax_amt" />
-                                                <span t-esc="' (' + str(int(tax_percent)) + '%)'" />
+                                               
+                                                <span t-esc="' ' + str(int(tax_percent)) + '%'" />
                                             </td>
 
                                             <!-- AMOUNT -->
@@ -277,9 +283,10 @@
                                     </td>
 
                                     <td style="padding: 4px; border: 1px solid black;"></td>
+                                    <td style="padding: 4px; border: 1px solid black;"></td>
 
                                     <!-- TAX TOTAL -->
-                                    <td
+                                    <!-- <td
                                         style="text-align: right; padding: 4px; border: 1px solid black;">
                                         <t t-set="gst_total"
                                             t-value="sum(
@@ -287,7 +294,8 @@
                                                 for line in o.order_line if not line.display_type)" />
 
                                         <span t-esc="'%.2f' % gst_total" />
-                                    </td>
+                                    </td> -->
+                                    <td style="padding: 4px; border: 1px solid black;"></td>
                                     <td
                                         style="text-align: right; padding: 4px; border: 1px solid black;">
                                         <span t-field="o.amount_untaxed" />
@@ -453,6 +461,7 @@
                                         <br />
                                     </t>
                                     <strong>Authorised Signatory</strong>
+                                    <p style="font-size:10px;">This is a comuter generated document hence signature is not required.</p>
                                 </td>
                             </tr>
                         </table>
